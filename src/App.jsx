@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import Message from './Message.jsx';
+const uuidv1 = require('uuid/v1');
+
 
 
 const data = {
@@ -28,6 +30,7 @@ class App extends Component {
       messages: [],
     }
     this.messagePost = this.messagePost.bind(this);
+    this.newUser = this.newUser.bind(this);
     this.socket = new WebSocket(`ws://${window.location.hostname}:3001`);
   }
 
@@ -35,16 +38,28 @@ class App extends Component {
 
     this.socket.addEventListener("open", (evt) => {
     console.log("Connected to the Server");
+
+    this.socket.addEventListener("message", (message) => {
+
+      let newMessage = JSON.parse(message.data);
+
+      let oldMessages = this.state.messages;
+      let newState = [...oldMessages, newMessage]
+      this.setState({
+        messages: newState
+      })
+
+    })
+
+
 });
   }
 
   messagePost(message) {
-    let lastMessageID = this.state.messages[this.state.messages.length-1].id;
-    console.log(lastMessageID)
-    console.log(message)
+    this.newUser(message.username);
 
     let newMessage = {
-      id: lastMessageID + 1,
+      id: uuidv1(),
       username: message.username,
       content: message.content
     }
@@ -53,11 +68,20 @@ class App extends Component {
 
     this.socket.send(messageString);
 
-    // let oldMessages = this.state.messages;
-    // let newState = [...oldMessages, newMessage]
-    // this.setState({
-    //   messages: newState
-    // })
+
+    let oldMessages = this.state.messages;
+    let newState = [...oldMessages, newMessage]
+    this.setState({
+      messages: newState
+    });
+    console.log("after setting state :",this.state.username);
+  }
+
+  newUser(e) {
+
+    this.setState({
+      username:e
+    }, () => console.log("CURRENT", this.state.username))
   }
 
   render() {
@@ -67,7 +91,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <Message messages = {this.state.messages}/>
-        <ChatBar currentUser = {this.state.currentUser} messagePost = {this.messagePost}/>
+        <ChatBar currentUser = {this.state.currentUser} messagePost = {this.messagePost} newUser = {this.newUser}/>
       </div>
       );
     }

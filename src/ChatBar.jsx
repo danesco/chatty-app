@@ -9,7 +9,8 @@ function ChatBar(props) {
     if(e.key === "Enter"){
       console.log(document.querySelector('#name').value)
       let content = e.target.value;
-      let userName = document.querySelector('#name').value ? document.querySelector('#name').value : 'Anonymous'
+
+      let userName = document.querySelector('#name').value ? document.querySelector('#name').value : 'Annonymous';
       let newMessage = {
               username: userName,
               content: content
@@ -19,9 +20,18 @@ function ChatBar(props) {
       e.target.value = '';
     }
   }
+
+  function onNewUser(e){
+
+    if(e.key === "Enter"){
+      props.newUser(e.target.value)
+    }
+
+
+  }
   return (
         <footer className="chatbar">
-          <input id="name" className="chatbar-username" placeholder={props.currentUser.name} />
+          <input onKeyUp={(e) => onNewUser(e)} id="name" className="chatbar-username" placeholder={props.currentUser.name} />
           <input onKeyPress={(e) => onSubmit(e)} className="chatbar-message" placeholder="Enter a Message!" />
         </footer>
 
