@@ -5,28 +5,28 @@ const uuidv1 = require('uuid/v1');
 
 
 
-const data = {
-  currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-  messages: [
-    {
-      id:1,
-      username: "Bob",
-      content: "Has anyone seen my marbles?",
-    },
-    {
-      id:2,
-      username: "Anonymous",
-      content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-    }
-  ]
-}
+// const data = {
+//   currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+//   messages: [
+//     {
+//       id:1,
+//       username: "Bob",
+//       content: "Has anyone seen my marbles?",
+//     },
+//     {
+//       id:2,
+//       username: "Anonymous",
+//       content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
+//     }
+//   ]
+// }
 
 class App extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      currentUser: data.currentUser,
+      currentUser: {name:'Anonymous'},
       messages: [],
     }
     this.messagePost = this.messagePost.bind(this);
@@ -58,6 +58,8 @@ class App extends Component {
   messagePost(message) {
     this.newUser(message.username);
 
+    console.log("I AM THE CURRENT USER", this.state.currentUser.name)
+
     let newMessage = {
       id: uuidv1(),
       username: message.username,
@@ -74,14 +76,13 @@ class App extends Component {
     this.setState({
       messages: newState
     });
-    console.log("after setting state :",this.state.username);
   }
 
   newUser(e) {
 
     this.setState({
-      username:e
-    }, () => console.log("CURRENT", this.state.username))
+      currentUser:{name: e}
+    }, () => console.log("CURRENT USER", this.state.currentUser.name))
   }
 
   render() {

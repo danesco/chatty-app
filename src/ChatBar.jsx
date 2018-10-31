@@ -10,7 +10,7 @@ function ChatBar(props) {
       console.log(document.querySelector('#name').value)
       let content = e.target.value;
 
-      let userName = document.querySelector('#name').value ? document.querySelector('#name').value : 'Annonymous';
+      let userName = document.querySelector('#name').value ? document.querySelector('#name').value : 'Anonymous';
       let newMessage = {
               username: userName,
               content: content
