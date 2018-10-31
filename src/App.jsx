@@ -25,7 +25,7 @@ class App extends Component {
 
     this.state = {
       currentUser: data.currentUser,
-      messages: data.messages,
+      messages: [],
     }
     this.messagePost = this.messagePost.bind(this);
     this.socket = new WebSocket(`ws://${window.location.hostname}:3001`);
