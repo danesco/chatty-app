@@ -3,24 +3,6 @@ import ChatBar from './ChatBar.jsx';
 import Message from './Message.jsx';
 const uuidv1 = require('uuid/v1');
 
-
-
-// const data = {
-//   currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-//   messages: [
-//     {
-//       id:1,
-//       username: "Bob",
-//       content: "Has anyone seen my marbles?",
-//     },
-//     {
-//       id:2,
-//       username: "Anonymous",
-//       content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-//     }
-//   ]
-// }
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -38,18 +20,6 @@ class App extends Component {
 
     this.socket.addEventListener("open", (evt) => {
       console.log("Connected to the Server");
-
-    // this.socket.addEventListener("message", (message) => {
-    //   console.log("we are in app componentDidMount" ,message.data);
-    //   let newMessage = JSON.parse(message.data);
-    //   let oldMessages = this.state.messages;
-    //   let newState = [...oldMessages, newMessage]
-    //   this.setState({
-    //     messages: newState
-    //   })
-
-    // })
-
 
 });
 
@@ -89,7 +59,6 @@ class App extends Component {
 
      let newMessage = {
       id: uuidv1(),
-      // username: " ",
       content: this.state.currentUser.name + " changed his name to " + e
     }
     this.socket.send(JSON.stringify(newMessage));
