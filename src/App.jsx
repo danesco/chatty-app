@@ -42,6 +42,7 @@ class App extends Component {
     // let user = this.state.currentUser.name;
 
     let newMessage = {
+      type:"postMessage",
       id: uuidv1(),
       username: this.state.currentUser.name,
       content: message
@@ -50,21 +51,23 @@ class App extends Component {
     let messageString = JSON.stringify(newMessage);
     this.socket.send(messageString);
     let oldMessages = this.state.messages;
-    console.log("old mnessages ",oldMessages);
+    // console.log("old mnessages ",oldMessages);
     let newState = [...oldMessages, newMessage]
+    console.log("NEW STATE BRUH", newState);
   }
 
   //this is to change user
   newUser(e) {
 
      let newMessage = {
+      type:"postNotification",
       id: uuidv1(),
       content: this.state.currentUser.name + " changed his name to " + e
     }
     this.socket.send(JSON.stringify(newMessage));
     this.setState({
       currentUser:{name: e}
-    }, () => console.log("CURRENT USER", this.state.currentUser.name))
+    }, () => console.log("CURRENT", this.state))
   }
 
   render() {

@@ -33,7 +33,10 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (message) => {
 
+    messageData = JSON.parse(message)
+
     clients.forEach(client => {
+      console.log(messageData.type);
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
