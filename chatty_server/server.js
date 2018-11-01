@@ -38,7 +38,16 @@ wss.on('connection', (ws) => {
     clients.forEach(client => {
       console.log(messageData.type);
       if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
+        switch(messageData.type){
+          case "postMessage":
+            messageData.type = "incomingMessage";
+            client.send(JSON.stringify(messageData));
+            break;
+          case "postNotification":
+            messageData.type = "incomingNotification";
+            client.send(JSON.stringify(messageData));
+            break;
+        }
       }
     })
 

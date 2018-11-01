@@ -53,7 +53,6 @@ class App extends Component {
     let oldMessages = this.state.messages;
     // console.log("old mnessages ",oldMessages);
     let newState = [...oldMessages, newMessage]
-    console.log("NEW STATE BRUH", newState);
   }
 
   //this is to change user
