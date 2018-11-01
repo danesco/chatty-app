@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import Message from './Message.jsx';
+import NavBar from './Nav.jsx';
 const uuidv1 = require('uuid/v1');
 
 class App extends Component {
@@ -24,7 +25,7 @@ class App extends Component {
 });
 
     this.socket.onmessage = (message)=> {
-      console.log("we are in app componentDidMount" ,message.data);
+      console.log("we are in app componentDidMount" ,message.data);z
       let newMessage = JSON.parse(message.data);
       let oldMessages = this.state.messages;
       let newState = [...oldMessages, newMessage]
@@ -37,9 +38,6 @@ class App extends Component {
 
   //this is to post a new message on the screen
   messagePost(message) {
-    // this.newUser(message.username);
-    // console.log("I AM THE CURRENT USER", this.state.currentUser.name)
-    // let user = this.state.currentUser.name;
 
     let newMessage = {
       type:"postMessage",
@@ -72,9 +70,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar">
-          <a href="/" className="navbar-brand">Chatty</a>
-        </nav>
+        <NavBar/>
         <Message messages = {this.state.messages}/>
         <ChatBar currentUser = {this.state.currentUser} messagePost = {this.messagePost} newUser = {this.newUser}/>
       </div>
