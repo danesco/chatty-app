@@ -37,49 +37,62 @@ class App extends Component {
   componentDidMount(){
 
     this.socket.addEventListener("open", (evt) => {
-    console.log("Connected to the Server");
+      console.log("Connected to the Server");
 
-    this.socket.addEventListener("message", (message) => {
+    // this.socket.addEventListener("message", (message) => {
+    //   console.log("we are in app componentDidMount" ,message.data);
+    //   let newMessage = JSON.parse(message.data);
+    //   let oldMessages = this.state.messages;
+    //   let newState = [...oldMessages, newMessage]
+    //   this.setState({
+    //     messages: newState
+    //   })
 
+    // })
+
+
+});
+
+    this.socket.onmessage = (message)=> {
+      console.log("we are in app componentDidMount" ,message.data);
       let newMessage = JSON.parse(message.data);
-
       let oldMessages = this.state.messages;
       let newState = [...oldMessages, newMessage]
       this.setState({
         messages: newState
       })
 
-    })
-
-
-});
+    };
   }
 
+  //this is to post a new message on the screen
   messagePost(message) {
-    this.newUser(message.username);
-
-    console.log("I AM THE CURRENT USER", this.state.currentUser.name)
+    // this.newUser(message.username);
+    // console.log("I AM THE CURRENT USER", this.state.currentUser.name)
+    // let user = this.state.currentUser.name;
 
     let newMessage = {
       id: uuidv1(),
-      username: message.username,
-      content: message.content
+      username: this.state.currentUser.name,
+      content: message
     }
 
     let messageString = JSON.stringify(newMessage);
-
     this.socket.send(messageString);
-
-
     let oldMessages = this.state.messages;
+    console.log("old mnessages ",oldMessages);
     let newState = [...oldMessages, newMessage]
-    this.setState({
-      messages: newState
-    });
   }
 
+  //this is to change user
   newUser(e) {
 
+     let newMessage = {
+      id: uuidv1(),
+      // username: " ",
+      content: this.state.currentUser.name + " changed his name to " + e
+    }
+    this.socket.send(JSON.stringify(newMessage));
     this.setState({
       currentUser:{name: e}
     }, () => console.log("CURRENT USER", this.state.currentUser.name))
