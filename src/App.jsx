@@ -25,7 +25,7 @@ class App extends Component {
 });
 
     this.socket.onmessage = (message)=> {
-      console.log("we are in app componentDidMount" ,message.data);z
+      console.log("we are in app componentDidMount" ,message.data);
       let newMessage = JSON.parse(message.data);
       let oldMessages = this.state.messages;
       let newState = [...oldMessages, newMessage]
