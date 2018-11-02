@@ -35,7 +35,6 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   clients.push(ws);
-  console.log(wss.clients.size)
 
   let userNum = {
     type:"userNum",
