@@ -21,15 +21,30 @@ const wss = new SocketServer({ server });
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
-// const clients = [];
+const clients = [];
+
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
-  // clients.push(ws);
+  clients.push(ws);
+  console.log(wss.clients.size)
+
+  let userNum = {
+    type:"userNum",
+    num:wss.clients.size
+  }
+
+  wss.broadcast(JSON.stringify(userNum));
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
 
   ws.on('message', (message) => {
 
@@ -44,10 +59,20 @@ wss.on('connection', (ws) => {
         break;
     }
 
-    wss.clients.forEach(client => {
+    clients.forEach(client => {
       client.send(JSON.stringify(messageData));
     })
 
   })
+
+  ws.on('close', () => {
+    let userNum = {
+      type:"userNum",
+      num:wss.clients.size
+    }
+
+    wss.broadcast(JSON.stringify(userNum));
+
+    console.log('Client disconnected')});
 });
 

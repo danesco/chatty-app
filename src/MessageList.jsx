@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 
 function MessageList(props){
-  console.log("PROPS", props);
   const messageList = props.messages.map(message => {
     switch(message.type){
       case "incomingNotification":
@@ -26,7 +25,6 @@ function MessageList(props){
         break;
     }
   });
-  console.log(messageList);
   return <div>{messageList}</div>;
 }
 

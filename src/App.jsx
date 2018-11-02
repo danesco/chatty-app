@@ -22,17 +22,27 @@ class App extends Component {
     this.socket.addEventListener("open", (evt) => {
       console.log("Connected to the Server");
 
-});
+    });
 
     this.socket.onmessage = (message)=> {
-      console.log("we are in app componentDidMount" ,message.data);
       let newMessage = JSON.parse(message.data);
-      let oldMessages = this.state.messages;
-      let newState = [...oldMessages, newMessage]
-      this.setState({
-        messages: newState
-      })
+      console.log("we are in app componentDidMount" ,newMessage);
+      let type = newMessage.type;
 
+      switch(type) {
+        case 'userNum': {
+          this.setState({userCount: newMessage.num});
+          break;
+        }
+        default: {
+
+          let oldMessages = this.state.messages;
+          let newState = [...oldMessages, newMessage]
+          this.setState({
+            messages: newState
+          })
+        }
+      }
     };
   }
 
@@ -70,7 +80,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar/>
+        <NavBar users = {this.state.userCount}/>
         <Message messages = {this.state.messages}/>
         <ChatBar currentUser = {this.state.currentUser} messagePost = {this.messagePost} newUser = {this.newUser}/>
       </div>
