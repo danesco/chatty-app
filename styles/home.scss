@@ -79,7 +79,7 @@ body {
 }
 
 .navbar-brand {
-  color: inherit;
+  color: white;
   display: block;
   float: left;
   font-weight: 700;
@@ -88,4 +88,10 @@ body {
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
+}
+
+#userNum {
+  float:right;
+  color:white;
+  margin-top:20px;
 }

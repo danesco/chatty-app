@@ -5,7 +5,7 @@ function NavBar(props) {
   return (
     <nav className="navbar">
       <a href="/" className="navbar-brand">Chatty</a>
-      <div>USERS ONLINE {props.users}</div>
+      <div id="userNum">USERS ONLINE {props.users}</div>
     </nav>
     );
 }
