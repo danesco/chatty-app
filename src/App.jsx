@@ -59,7 +59,6 @@ class App extends Component {
     let messageString = JSON.stringify(newMessage);
     this.socket.send(messageString);
     let oldMessages = this.state.messages;
-    // console.log("old mnessages ",oldMessages);
     let newState = [...oldMessages, newMessage]
   }
 

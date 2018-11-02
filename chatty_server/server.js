@@ -48,7 +48,7 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) => {
 
     messageData = JSON.parse(message)
-
+    //change type to be handled on front end differently
     switch(messageData.type){
       case "postMessage":
         messageData.type = "incomingMessage";
