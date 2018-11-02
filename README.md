@@ -2,6 +2,12 @@
 
 Chatty is a full stack web application built with React that allows users to talk to eachother in real time through web a web socket server.
 
+## Final Product
+
+!["User Interface"](https://github.com/danesco/chatty-app/blob/master/docs/ChattyFront.gif?raw=true)
+!["User count"](https://github.com/danesco/chatty-app/blob/master/docs/userCount.gif?raw=true)
+
+
 ### Getting Started
 
 * Install all dependencies (using the npm install command).
